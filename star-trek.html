@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="js/jquery-1.11.0.min.js"></script>
+	<style type="text/css">
+		.container {
+			margin: auto;
+		    width: 80%;
+		    background-color: lightgrey;
+		}
+		#table {
+			display: flex;
+			display: -webkit-flex;
+			flex-wrap: wrap;
+			background-color: white;
+			text-align: center;
+		}
+
+		.row {
+			display: flex;
+			display: -webkit-flex;
+			flex-wrap: wrap;
+			width: 100%;
+			justify-content: center;
+    		flex-shrink: 0
+		}
+
+		.list-2-c-name, .list-2-c-height {
+			flex: 1;
+			border:1px solid  #666666;
+		}
+
+		.list-link {
+			flex: 2;
+			border:1px solid  #666666;
+			padding: 0 20%;
+		}
+
+		.links {
+			background-color: grey;
+			margin-bottom: 10px;
+			background: #dddddd;
+			border: 1px solid #a1a1a1;
+			border-radius: 10px;
+			padding: 0 2%;
+		}
+
+		.list-link-row {
+			flex-basis: auto;
+			margin: 1%;
+		}
+
+		div.list-link-row:hover span{
+			background: #00CED1;
+		}
+	</style>
+</head>
+<body>
+
+<div class="container">
+
+	<div id="table" class="list">
+	</div>
+
+<div>
+</div>
+</div>
+
+
+
+<script type="text/javascript">
+	
+	$.ajax({
+	  dataType: "json",
+	  url: "https://swapi.co/api/people/",
+	  success: function (data) {
+	  	
+	  	// looping through the received data
+	  	$.each(data['results'], function(key,value) {
+
+	  		// Showing name and height of the character
+		    var firstPart = "<div class=\"row\"><div class=\"list-2-c-name\">" + value['name'] + "</div><div class=\"list-2-c-height\">" + value['height'] + "</div>";
+
+		    firstPart += "<div class=\"list-link\">";
+
+		    // setting link Values
+		    $.each(value['films'], function(keyIn, valueIn){
+		    	firstPart += "<div class=\"list-link-row\"><a href=\"" + valueIn + "\"><span class=\"links\">" + valueIn + "</span></a></div>";
+		    });
+
+		    firstPart += "</div></div>"
+		   	$("#table").append(firstPart);
+		});
+	  	
+	  },
+	  error : function (error) {
+	  	alert ("There is an error getting data.");
+	  }
+	});
+		
+
+</script>
+</body>
+</html>
